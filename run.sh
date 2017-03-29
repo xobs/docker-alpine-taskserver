@@ -16,12 +16,11 @@ _generateCertKey () {
     cd ${pkiPath}
     sed -i "s@^CN=.*@CN=${cn}@g" vars
     ./generate
-    cp *.pem ${data}
 }
 
 _certConfig () {
     for ck in ${certKey}; do
-        ${taskdCmd} config ${ck} ${data}/${ck}.pem --data ${data}
+        ${taskdCmd} config ${ck} ${pkiPath}/${ck}.pem --data ${data}
     done
 }
 
@@ -50,7 +49,7 @@ else
     fi
     
     for file in ${certKey}; do
-        if [ ! -f ${data}/${file}.pem ]; then
+        if [ ! -f ${pkiPath}/${file}.pem ]; then
             _generateCertKey
             _certConfig
             break
