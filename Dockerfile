@@ -17,4 +17,4 @@ WORKDIR /
 
 EXPOSE 53589
 
-CMD [ "entrypoint.sh" ]
+CMD [ "/entrypoint.sh" ]
