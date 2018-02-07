@@ -1,12 +1,20 @@
 FROM alpine:3.5
 
-MAINTAINER Matthieu Monnier <matthieu.monnier@enalean.com>
+MAINTAINER Sean Cross <sean@xobs.io>
 
-RUN apk add --no-cache taskd taskd-pki \
-    && mkdir -p /var/lib/taskd
+# Keep this safe somewhere, as it's the taskd config dir
+VOLUME /data
+ENV TASKDDATA /data
 
-COPY run.sh /usr/local/bin/
+# Mount this as readonly
+VOLUME /letsencrypt
 
-WORKDIR /usr/local/bin
+RUN apk add --no-cache taskd taskd-pki
 
-CMD [ "run.sh" ]
+COPY entrypoint.sh /
+
+WORKDIR /
+
+EXPOSE 53589
+
+CMD [ "entrypoint.sh" ]
