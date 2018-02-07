@@ -9,6 +9,7 @@ Starting a Server
 ````
 docker run \
     --rm \
+    --detach \
     --name taskwarrior \
     -p 53589:53589 \
     -v /etc/letsencrypt:/certificates:ro \
